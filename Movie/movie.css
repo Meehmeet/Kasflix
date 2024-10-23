@@ -1,0 +1,38 @@
+#background {
+    background-color: #0D0B0B;
+    width: 1579px;
+    height: 1311px;
+}
+
+#Suche input {
+    position: absolute;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    border-color: #7F7777;
+    color: #7F7777;
+    background-color: #0D0B0B;
+    margin-left: 40px;
+    margin-top: 100px;
+    padding: 10px;
+    padding-right: 300px;
+    border: solid;
+}
+
+#Suche input:focus {
+    outline: none;
+}
+
+#image-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+#nachoImg {
+    width: 100px;
+    margin: 0 10px;
+}
+
+#movieImg {
+    width: 250px;
+}
