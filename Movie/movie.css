@@ -172,9 +172,11 @@ button:hover {
 }
 
 .modal-content {
-    position: relative;
+    font-family: 'Roboto', sans-serif;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
     background-color: #1c1c1c;
     padding: 20px;
     border-radius: 12px;
@@ -182,12 +184,37 @@ button:hover {
     max-width: 90%;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     color: #f1f1f1;
-    text-align: center;
+    text-align: left;
+}
+
+#modal-details {
+    max-width: 60%;
+    margin-right: 20px;
+}
+
+#moviePoster {
+    max-width: 45%;
+    height: auto;
+    border-radius: 8px;
+    margin-left: 20px;
+    margin-top: 160px;
+}
+
+
+.modal-content h2 {
+    font-family: 'Hedvig Letters Serif', serif;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.modal-content p {
+    font-size: 18px;
+    margin: 8px 0;
 }
 
 .close-button {
     position: absolute;
-    margin-left: 445px;
+    margin-left: 430px;
     width: 204px;
     height: 24px;
     cursor: pointer;

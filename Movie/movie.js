@@ -107,23 +107,23 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 if (data) {
-                    modalDetails.innerHTML = `
-                        <h2>${data.Title}</h2>
-                        <p><strong>Release Year:</strong> ${data.Year}</p>
-                        <p><strong>Metacritic:</strong> ${data.Metascore ? data.Metascore + "/100" : "N/A"}</p>
-                        <p><strong>Runtime:</strong> ${data.Runtime}</p>
-                        <p><strong>Genres:</strong> ${data.Genre}</p>
-                        <p><strong>Languages:</strong> ${data.Language}</p>
-                        <p><strong>Country:</strong> ${data.Country}</p>
-                        <p><strong>Awards:</strong> ${data.Awards}</p>
-                        <p><strong>Plot:</strong> ${data.Plot}</p>
-                        <img src="${data.Poster}" alt="${data.Title}" style="max-width: 100%; border-radius: 8px; margin-top: 10px;">
-                    `;
+                    document.getElementById('movieTitle').textContent = data.Title;
+                    document.getElementById('releaseYear').textContent = data.Year;
+                    document.getElementById('metacritic').textContent = data.Metascore ? `${data.Metascore}/100` : "N/A";
+                    document.getElementById('runtime').textContent = data.Runtime;
+                    document.getElementById('genres').textContent = data.Genre;
+                    document.getElementById('languages').textContent = data.Language;
+                    document.getElementById('country').textContent = data.Country;
+                    document.getElementById('awards').textContent = data.Awards;
+                    document.getElementById('plot').textContent = data.Plot;
+                    document.getElementById('moviePoster').src = data.Poster;
+
                     modal.style.display = "block";
                 }
             })
             .catch(error => console.log("Fehler beim Abrufen der Filmdetails: ", error));
     }
+
 
 
     function closeModal() {

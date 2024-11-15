@@ -8,6 +8,7 @@
     <link rel="icon" href=".\images\Nachos.png">
     <link rel="stylesheet" href="movie.css">
     <link rel="stylesheet" href="reset.css">
+    <link href="URL_TO_HEDVIG_LETTERS_SERIF" rel="stylesheet">
     <script src="movie.js"></script>
 </head>
 
@@ -50,12 +51,25 @@
     <div id="movieModal" class="modal">
         <div id="irgendwas" class="irgendwas">
             <div class="modal-content">
+                <div id="modal-details">
+                    <h2 id="movieTitle"></h2>
+                    <p><strong>Release Year:</strong> <span id="releaseYear"></span></p>
+                    <p><strong>Metacritic:</strong> <span id="metacritic"></span></p>
+                    <p><strong>Runtime:</strong> <span id="runtime"></span></p>
+                    <p><strong>Genres:</strong> <span id="genres"></span></p>
+                    <p><strong>Languages:</strong> <span id="languages"></span></p>
+                    <p><strong>Country:</strong> <span id="country"></span></p>
+                    <p><strong>Awards:</strong> <span id="awards"></span></p>
+                    <p><strong>Plot:</strong> <span id="plot"></span></p>
+                </div>
+                <img id="moviePoster" src="" alt="Movie Poster">
                 <div class="close-button">
                     <img src=".\images\close.png" alt="Close" id="closeModalButton">
                 </div>
-                <div id="modal-details"></div>
             </div>
+
         </div>
+    </div>
     </div>
 
 </body>
