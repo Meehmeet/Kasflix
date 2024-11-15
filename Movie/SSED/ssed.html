@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Form Validation with Parsley</title>
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="parsley.min.js"></script>
+    <link rel="stylesheet" href="parsley.css">
+</head>
+
+<body>
+    <form id="demo-form" data-parsley-validate="">
+        <label for="fullname">Full Name:</label>
+        <input type="text" class="form-control" name="fullname" required="">
+
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" name="email" data-parsley-trigger="change" required="">
+
+        <label for="color">Farbe:</label>
+        <input type="color" class="form-control" name="color" required="">
+
+        <label for="datetime-local">Date and Time:</label>
+        <input type="datetime-local" class="form-control" name="datetime-local" required="">
+
+        <label for="password">Passwort:</label>
+        <input type="password" class="form-control" name="password" data-parsley-minlength="8" required="">
+
+        <label for="tel">Telefon:</label>
+        <input type="tel" class="form-control" name="tel" data-parsley-pattern="^\+?\d{10,15}$" required="">
+
+        <label for="url">Website:</label>
+        <input type="url" class="form-control" name="url" required="">
+
+        <label for="number">Zahl:</label>
+        <input type="number" class="form-control" name="number" required="">
+
+        <label for="range">Range 1-100 :</label>
+        <input type="range" class="form-control" name="range" min="1" max="100">
+
+        <label for="month">Monat:</label>
+        <input type="month" class="form-control" name="month">
+
+        <label for="week">Woche:</label>
+        <input type="week" class="form-control" name="week">
+
+        <label for="file">File:</label>
+        <input type="file" class="form-control" name="file" accept=".jpg,.png,.pdf" required
+            data-parsley-filetype="jpg,png,pdf" data-parsley-max-file-size="1000000">
+
+        <label for="contactMethod">Preferred Contact Method:</label>
+        <p>
+            Email: <input type="radio" name="contactMethod" id="contactMethodEmail" value="Email" required="">
+            Phone: <input type="radio" name="contactMethod" id="contactMethodPhone" value="Phone">
+        </p>
+
+        <label for="hobbies">Hobbies (Optional, but 2 minimum):</label>
+        <p>
+            Skiing <input type="checkbox" name="hobbies[]" id="hobby1" value="ski" data-parsley-mincheck="2"><br>
+            Running <input type="checkbox" name="hobbies[]" id="hobby2" value="run"><br>
+            Reading <input type="checkbox" name="hobbies[]" id="hobby3" value="read"><br>
+        </p>
+
+        <label for="heard">Joghurt:</label>
+        <select id="heard" required="">
+            <option value="">Wähle..</option>
+            <option value="press">Vanilla</option>
+            <option value="net">Erdbeer</option>
+            <option value="mouth">Himbeer</option>
+        </select>
+
+        <label for="message">Message (20 chars min, 100 max) :</label>
+        <textarea id="message" class="form-control" name="message" data-parsley-trigger="keyup"
+            data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-validation-threshold="10"></textarea>
+
+        <br>
+        <input type="submit" class="btn btn-default" value="Validate">
+    </form>
+
+
+    <script type="text/javascript">
+        window.Parsley.addValidator('maxFileSize', {
+            validateString: function (value, maxSize, parsleyInstance) {
+                if (!parsleyInstance.$element[0].files.length) {
+                    return true;
+                }
+                var file = parsleyInstance.$element[0].files[0];
+                return file.size <= maxSize;
+            },
+            requirementType: 'integer',
+            messages: {
+                en: 'File size should not exceed 1 MB.'
+            }
+        });
+
+        window.Parsley.addValidator('filetype', {
+            validateString: function (value, requirement, parsleyInstance) {
+                if (!parsleyInstance.$element[0].files.length) {
+                    return true;
+                }
+                var allowedTypes = requirement.split(',');
+                var fileExtension = parsleyInstance.$element[0].files[0].name.split('.').pop().toLowerCase();
+                return allowedTypes.includes(fileExtension);
+            },
+            requirementType: 'string',
+            messages: {
+                en: 'Only JPG, PNG, and PDF files are allowed.'
+            }
+        });
+
+        $(function () {
+            $('#demo-form').parsley().on('field:validated', function () {
+                var ok = $('.parsley-error').length === 0;
+                $('.bs-callout-info').toggleClass('hidden', !ok);
+                $('.bs-callout-warning').toggleClass('hidden', ok);
+            })
+                .on('form:submit', function () {
+                    return false;
+                });
+        });
+    </script>
+</body>
+
+</html>

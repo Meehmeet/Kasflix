@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var apiKey = "5238ec27";
+        async function checkAjax(search) {
+            try {
+                const response = await fetch("https://www.omdbapi.com/?s=" + search + "&r=json&apikey=" + apiKey);
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new TypeError("Oops, we haven't got JSON!");
+                }
+                const data = await response.json();
+                if (check_array(data.Search)) {
+                    data.Search.forEach((element, index) => {
+                        var div = document.getElementById('result');
+                        div.innerHTML += element.Title + " " + element.Year;
+                        console.log(element.title)
+                    });
+                }
+                // process your data further
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+        function check_array(myArrray) {
+            if (typeof myArrray === 'object' && myArrray instanceof Array) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+    <style>
+        .theflex {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="checkAjax('tarzan')">start</button>
+    <div class="theflex">
+        <div id="result"></div>
+        <div id="gamesplay"></div>
+    </div>
+
+    <script src="js/jquery-3.1.0.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+
+</html>

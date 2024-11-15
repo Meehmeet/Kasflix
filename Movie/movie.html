@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasflix</title>
+    <link rel="icon" href=".\images\Nachos.png">
     <link rel="stylesheet" href="movie.css">
     <link rel="stylesheet" href="reset.css">
     <script src="movie.js"></script>
@@ -14,13 +15,49 @@
     <div id="background">
 
         <div id="Suche">
-            <input type="text" placeholder="Suche in KASFLIX">
+            <input type="text" placeholder="Suche in KASFLIX" id="searchInput">
         </div>
+
+        <div id="Lupen">
+            <button id="searchButton" onclick="searchMovies()">
+                <img id="Lupe" src=".\images\Lupe.png" alt="lupe">
+            </button>
+        </div>
+
         <div id="image-wrapper">
             <img id="nachoImg" src=".\images\Nachos.png" alt="nacho">
-            <img id="movieImg" src=".\images\Kasflix.png" alt="movie">
+            <button id="logo-button" onclick="resetToRandomMovies()">
+                <img id="logoImg" src=".\images\Kasflix.png" alt="movie">
+            </button>
+        </div>
+
+
+
+        <div id="movie-wrapper">
+        </div>
+
+        <div id="Seite">
+            <button class="Knopf" data-page="1">1</button>
+            <button class="Knopf" data-page="2">2</button>
+            <button class="Knopf" data-page="3">3</button>
+            <button class="Knopf" data-page="4">4</button>
+            <button class="Knopf" data-page="5">5</button>
+            <button class="Knopf" data-page="6">6</button>
+        </div>
+
+    </div>
+
+    <div id="movieModal" class="modal">
+        <div id="irgendwas" class="irgendwas">
+            <div class="modal-content">
+                <div class="close-button">
+                    <img src=".\images\close.png" alt="Close" id="closeModalButton">
+                </div>
+                <div id="modal-details"></div>
+            </div>
         </div>
     </div>
+
 </body>
 
 </html>

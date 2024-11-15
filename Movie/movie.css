@@ -1,7 +1,11 @@
+body {
+    overflow-x: hidden;
+}
+
 #background {
     background-color: #0D0B0B;
-    width: 1579px;
-    height: 1311px;
+    width: 100vw;
+    height: 1560px;
 }
 
 #Suche input {
@@ -22,6 +26,27 @@
     outline: none;
 }
 
+#Lupe {
+    width: 50px;
+    height: 50px;
+}
+
+#searchButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 605px;
+    margin-top: 100px;
+    position: absolute;
+}
+
+#searchButton img {
+    width: 50px;
+    height: 50px;
+}
+
+
 #image-wrapper {
     display: flex;
     align-items: center;
@@ -33,6 +58,142 @@
     margin: 0 10px;
 }
 
-#movieImg {
+#logoImg {
     width: 250px;
+}
+
+#logo-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 250px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo-button:focus {
+    outline: none;
+}
+
+#movie-wrapper {
+    padding-left: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: 70px;
+}
+
+.movie img {
+    width: 200px;
+    height: 327px;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.movie img:hover {
+    transform: scale(1.05);
+}
+
+#Seite {
+    position: relative;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+button {
+    padding: 5px 12px;
+    font-size: 14px;
+    background-color: #7F7777;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.Knopf {
+    margin: 5px;
+}
+
+.Knopf.active {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #fff;
+    font-weight: bold;
+}
+
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #7F7777;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.irgendwas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 12px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    color: #f1f1f1;
+    text-align: center;
+}
+
+.close-button {
+    position: absolute;
+    margin-left: 445px;
+    width: 204px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.close-button img {
+    width: 100px;
+    height: 68px;
 }
