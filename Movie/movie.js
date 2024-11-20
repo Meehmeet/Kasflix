@@ -1,12 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("searchButton").addEventListener("click", performSearch);
     const apiKey = "d1d69919";
     const movieWrapper = document.getElementById("movie-wrapper");
     const SeitenButtons = document.querySelectorAll(".Knopf");
     const searchInput = document.getElementById("searchInput");
     const modal = document.getElementById("movieModal");
-    const modalDetails = document.getElementById("modal-details");
     let currentPage = 1;
-    const moviesPerPage = 26;
+    let currentQuery = "";
+    const moviesPerPageRandom = 26;
+    const moviesPerPageSearch = 10;
     let allMovies = [];
 
     const randomTitles = [
@@ -31,58 +33,53 @@ document.addEventListener("DOMContentLoaded", function () {
     function fetchRandomMovies() {
         allMovies = [];
         const shuffledTitles = shuffleArray([...randomTitles]);
-
-        shuffledTitles.forEach(title => {
+        const promises = shuffledTitles.map(title =>
             fetch(`http://www.omdbapi.com/?s=${title}&apikey=${apiKey}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.Search) {
                         allMovies.push(...data.Search);
-                        if (allMovies.length >= moviesPerPage) {
-                            displayMovies(1);
-                        }
                     }
                 })
-                .catch(error => console.log("Fehler beim Abrufen der Daten: ", error));
+                .catch(error => console.error("Fehler beim Abrufen der Daten:", error))
+        );
+
+        Promise.all(promises).then(() => {
+            displayMovies(1, moviesPerPageRandom);
         });
     }
 
-    function searchMovies() {
-        const query = searchInput.value.trim();
-        if (!query) return;
-        allMovies = [];
-        movieWrapper.innerHTML = "";
-
-        fetch(`http://www.omdbapi.com/?s=${query}&apikey=${apiKey}`)
+    function searchMovies(query, page) {
+        fetch(`http://www.omdbapi.com/?s=${query}&page=${page}&apikey=${apiKey}`)
             .then(response => response.json())
             .then(data => {
                 if (data.Search) {
-                    allMovies.push(...data.Search);
-                    displayMovies(1);
+                    allMovies = data.Search;
+                    displayMovies(1, moviesPerPageSearch);
                 } else {
                     movieWrapper.innerHTML = "<p>Keine Ergebnisse gefunden</p>";
                 }
             })
-            .catch(error => console.log("Fehler beim Abrufen der Daten: ", error));
+            .catch(error => console.error("Fehler beim Abrufen der Daten:", error));
     }
 
-    function resetToRandomMovies() {
-        searchInput.value = "";
-        currentPage = 1;
-        fetchRandomMovies();
-    }
-
-    function displayMovies(page) {
+    function displayMovies(page, moviesPerPage) {
         movieWrapper.innerHTML = "";
         const startIndex = (page - 1) * moviesPerPage;
         const endIndex = page * moviesPerPage;
         const moviesToShow = allMovies.slice(startIndex, endIndex);
+
+        if (moviesToShow.length === 0) {
+            movieWrapper.innerHTML = "<p>Keine Filme gefunden.</p>";
+            return;
+        }
 
         moviesToShow.forEach(movie => {
             if (movie.Poster !== "N/A") {
                 createMovieElement(movie.Poster, movie.Title, movie.imdbID);
             }
         });
+
         highlightActiveButton(page);
     }
 
@@ -121,10 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     modal.style.display = "block";
                 }
             })
-            .catch(error => console.log("Fehler beim Abrufen der Filmdetails: ", error));
+            .catch(error => console.error("Fehler beim Abrufen der Filmdetails:", error));
     }
-
-
 
     function closeModal() {
         modal.style.display = "none";
@@ -148,20 +143,41 @@ document.addEventListener("DOMContentLoaded", function () {
     SeitenButtons.forEach(button => {
         button.addEventListener("click", function () {
             currentPage = parseInt(this.getAttribute("data-page"));
-            displayMovies(currentPage);
+            if (currentQuery) {
+                searchMovies(currentQuery, currentPage);
+            } else {
+                displayMovies(currentPage, moviesPerPageRandom);
+            }
         });
     });
-
 
     document.getElementById("closeModalButton").addEventListener("click", closeModal);
     searchInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
-            searchMovies();
+            currentQuery = searchInput.value.trim();
+            if (currentQuery) {
+                currentPage = 1;
+                searchMovies(currentQuery, currentPage);
+            }
         }
     });
 
-    const logoImg = document.getElementById("logoImg");
-    logoImg.addEventListener("click", resetToRandomMovies);
+    document.getElementById("logoImg").addEventListener("click", function () {
+        currentQuery = "";
+        currentPage = 1;
+        fetchRandomMovies();
+    });
+
+    function performSearch() {
+        console.log("Suchbutton wurde geklickt!");
+        currentQuery = document.getElementById("searchInput").value.trim();
+        if (currentQuery) {
+            currentPage = 1;
+            searchMovies(currentQuery, currentPage);
+        }
+    }
+
+
 
     fetchRandomMovies();
 });

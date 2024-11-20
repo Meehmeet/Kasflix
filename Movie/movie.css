@@ -216,11 +216,11 @@ button:hover {
     position: absolute;
     margin-left: 430px;
     width: 204px;
-    height: 24px;
+    height: 20px;
     cursor: pointer;
 }
 
 .close-button img {
     width: 100px;
-    height: 68px;
+    height: 58px;
 }
