@@ -24,7 +24,7 @@ const schema = {
                 Land: { type: "string" },
                 Telefon: { type: "string" },
                 Telefax: { type: "string" },
-                Email: { type: "string", format: "email" }
+                Email: { type: "string" }
             },
             required: ["Anrede", "Familienname", "Vorname", "Strasse", "Plz", "Ort", "Land"],
         },
@@ -77,7 +77,7 @@ const data = {
         },
         {
             Nachname: "Maier",
-            Vorname: "Marta",
+            Vorname: 1,
             Altersklasse: "DAAK",
             Klasse: "LB",
             Startzeit: "Vormittag"
