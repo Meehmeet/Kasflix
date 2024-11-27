@@ -17,7 +17,7 @@ const schema = Joi.object({
         Land: Joi.string().required(),
         Telefon: Joi.string().allow(''),
         Telefax: Joi.string().allow(''),
-        Email: Joi.string().email().required()
+        Email: Joi.string().email().allow()
     }).required(),
 
     teilnehmer: Joi.array().items(
