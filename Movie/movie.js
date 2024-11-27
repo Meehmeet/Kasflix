@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.Search) {
                     allMovies = data.Search;
                     displayMovies(1, moviesPerPageSearch);
+                    highlightActiveButton(page);
                 } else {
                     movieWrapper.innerHTML = "<p>Keine Ergebnisse gefunden</p>";
                 }

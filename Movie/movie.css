@@ -5,7 +5,7 @@ body {
 #background {
     background-color: #0D0B0B;
     width: 100vw;
-    height: 1560px;
+    height: 100%;
 }
 
 #Suche input {
