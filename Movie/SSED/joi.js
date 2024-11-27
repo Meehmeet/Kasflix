@@ -69,5 +69,5 @@ const data = {
 
 const { error, value } = schema.validate(data);
 if (error) {
-    console.error('Falsch:', error.details);
+    console.error(error.details);
 }
