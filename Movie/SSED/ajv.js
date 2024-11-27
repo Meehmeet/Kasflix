@@ -8,7 +8,7 @@ const schema = {
             properties: {
                 erstellt: { type: "string", format: "date" },
                 verein: { type: "string" },
-                ipaddresse: { type: "string" }
+                ipaddresse: { type: "string", format: "ipv4" }
             },
             required: ["erstellt", "verein", "ipaddresse"],
         },
@@ -24,7 +24,7 @@ const schema = {
                 Land: { type: "string" },
                 Telefon: { type: "string" },
                 Telefax: { type: "string" },
-                Email: { type: "string" }
+                Email: { type: "string", format: "email" }
             },
             required: ["Anrede", "Familienname", "Vorname", "Strasse", "Plz", "Ort", "Land"],
         },
@@ -65,7 +65,7 @@ const data = {
         Land: "Österreich",
         Telefon: "",
         Telefax: "",
-        Email: ""
+        Email: "Kas@gmail.com"
     },
     teilnehmer: [
         {
@@ -77,7 +77,7 @@ const data = {
         },
         {
             Nachname: "Maier",
-            Vorname: 1,
+            Vorname: "Marta",
             Altersklasse: "DAAK",
             Klasse: "LB",
             Startzeit: "Vormittag"
