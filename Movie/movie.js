@@ -10,11 +10,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const moviesPerPageRandom = 26;
     const moviesPerPageSearch = 10;
     let allMovies = [];
+    createPageButtons(currentPage);
 
     const randomTitles = [
         "Joker", "Batman", "Inception", "Avengers", "Spiderman",
         "Titanic", "Matrix", "Gladiator", "Toy Story", "Interstellar",
-        "Lion King", "Frozen", "The Godfather", "Lord of the Rings", "Harry Potter",
+        "Lion King", "Frozen", "The Godfather", "Lord of the Rings", "Harry Pötter",
         "Terminator", "Shrek", "Finding Nemo", "Iron Man", "Deadpool",
         "Black Panther", "Django", "Pulp Fiction", "Pirates of the Caribbean", "Thor",
         "Mad Max", "John Wick", "The Dark Knight", "Guardians of the Galaxy", "Star Wars",
@@ -84,6 +85,41 @@ document.addEventListener("DOMContentLoaded", function () {
         highlightActiveButton(page);
     }
 
+    function createPageButtons(currentPage) {
+        const buttonContainer = document.getElementById("Seite");
+        buttonContainer.innerHTML = "";
+
+        const totalButtons = 6;
+
+        const startPage = currentPage - Math.floor(totalButtons / 2);
+        const endPage = currentPage + Math.floor(totalButtons / 2);
+
+        for (let i = startPage; i <= endPage; i++) {
+            if (i < 1) continue;
+
+            const button = document.createElement("button");
+            button.classList.add("Knopf");
+            button.setAttribute("data-page", i);
+            button.textContent = i;
+
+            if (i === currentPage) {
+                button.classList.add("active");
+            }
+
+            button.addEventListener("click", function () {
+                currentPage = parseInt(this.getAttribute("data-page"));
+                if (currentQuery) {
+                    searchMovies(currentQuery, currentPage);
+                } else {
+                    displayMovies(currentPage, moviesPerPageRandom);
+                }
+                createPageButtons(currentPage);
+            });
+
+            buttonContainer.appendChild(button);
+        }
+    }
+
     function createMovieElement(posterUrl, title, imdbID) {
         const movieElement = document.createElement("div");
         movieElement.classList.add("movie");
@@ -140,17 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
-    SeitenButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            currentPage = parseInt(this.getAttribute("data-page"));
-            if (currentQuery) {
-                searchMovies(currentQuery, currentPage);
-            } else {
-                displayMovies(currentPage, moviesPerPageRandom);
-            }
-        });
-    });
 
     document.getElementById("closeModalButton").addEventListener("click", closeModal);
     searchInput.addEventListener("keydown", function (event) {
