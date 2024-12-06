@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("searchButton").addEventListener("click", performSearch);
+    document.getElementById("firstPage").addEventListener("click", firstPage);
     const apiKey = "d1d69919";
     const movieWrapper = document.getElementById("movie-wrapper");
     const SeitenButtons = document.querySelectorAll(".Knopf");
@@ -184,6 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (currentQuery) {
                 currentPage = 1;
                 searchMovies(currentQuery, currentPage);
+                createPageButtons(currentPage);
             }
         }
     });
@@ -192,7 +194,20 @@ document.addEventListener("DOMContentLoaded", function () {
         currentQuery = "";
         currentPage = 1;
         fetchRandomMovies();
+        createPageButtons(currentPage);
     });
+
+    function firstPage() {
+        currentPage = 1;
+        if (currentQuery) {
+            searchMovies(currentQuery, currentPage);
+        } else {
+            displayMovies(currentPage, moviesPerPageRandom);
+        }
+        createPageButtons(currentPage);
+    };
+
+
 
     function performSearch() {
         console.log("Suchbutton wurde geklickt!");
@@ -200,10 +215,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (currentQuery) {
             currentPage = 1;
             searchMovies(currentQuery, currentPage);
+            createPageButtons(currentPage);
         }
     }
-
-
 
     fetchRandomMovies();
 });

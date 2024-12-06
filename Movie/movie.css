@@ -107,6 +107,14 @@ body {
     text-align: center;
 }
 
+#Seite2 {
+    position: relative;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
 
 button {
     padding: 5px 12px;
@@ -117,6 +125,21 @@ button {
     cursor: pointer;
     border-radius: 5px;
     margin: 0 5px;
+}
+
+.firstPage {
+    background-color: #7F7777;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 1000;
+    text-align: center;
+}
+
+.firstPage:hover {
+    background-color: #555;
 }
 
 button:hover {
