@@ -2,11 +2,13 @@ const express = require("express");
 const mysql = require("mysql2");
 const dotenv = require("dotenv");
 const Ajv = require("ajv");
+const addFormats = require("ajv-formats");
 
 dotenv.config();
 const app = express();
 const port = 3000;
 const ajv = new Ajv();
+addFormats(ajv);
 
 // 📌 AJV Middleware
 function validateSchema(schema) {
