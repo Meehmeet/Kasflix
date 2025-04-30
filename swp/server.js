@@ -10,7 +10,7 @@ const port = 3000;
 const ajv = new Ajv();
 addFormats(ajv);
 
-// 📌 AJV Middleware
+// AJV Middleware
 function validateSchema(schema) {
     const validate = ajv.compile(schema);
     return (req, res, next) => {
@@ -25,7 +25,7 @@ function validateSchema(schema) {
     };
 }
 
-// 📌 JSON-Schemas
+// JSON-Schemas
 const helloBodySchema = {
     type: "object",
     properties: {
