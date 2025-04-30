@@ -32,6 +32,14 @@ document.addEventListener("DOMContentLoaded", function () {
         return array;
     }
 
+    function saveSearchInput(query) {
+        document.cookie = `Suche=${query};`;
+
+        sessionStorage.setItem("Suche", query);
+
+        localStorage.setItem("Suche", query);
+    }
+
     function fetchRandomMovies() {
         allMovies = [];
         const shuffledTitles = shuffleArray([...randomTitles]);
@@ -179,6 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.getElementById("closeModalButton").addEventListener("click", closeModal);
+
     searchInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             currentQuery = searchInput.value.trim();
@@ -186,6 +195,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 currentPage = 1;
                 searchMovies(currentQuery, currentPage);
                 createPageButtons(currentPage);
+
+                saveSearchInput(currentQuery);
             }
         }
     });
