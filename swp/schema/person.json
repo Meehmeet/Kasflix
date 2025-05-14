@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "properties": {
+      "vorname": { "type": "string" },
+      "nachname": { "type": "string" },
+      "plz": { "type": "integer" },
+      "strasse": { "type": "string" },
+      "ort": { "type": "string" },
+      "telefonnummer": { "type": "integer" },
+      "email": { "type": "string", "format": "email" }
+    },
+    "required": ["vorname", "nachname", "email"],
+    "additionalProperties": false
+  }  
