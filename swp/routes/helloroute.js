@@ -6,7 +6,7 @@ const validateSchema = require("../middleware/validation");
 module.exports = (db) => {
   const router = express.Router();
 
-  // Schema der hello.json-Datei
+  // Schema
   const helloSchema = JSON.parse(
     fs.readFileSync(path.join(__dirname, "../schema/hello.json"), "utf8")
   );
@@ -18,39 +18,26 @@ module.exports = (db) => {
       "INSERT INTO greetings (name, source) VALUES (?, ?)",
       [name, "body"],
       (err) => {
-        if (err) return res.status(500).send("Fehler beim Einfügen in die DB");
+        if (err) return res.status(400).send({message: "Fehler beim Einfügen in die DB"});
         res.send({ message: "Name gespeichert", name });
       }
     );
   });
 
-  // GET /hello
+  // GET /hello?name=--- Query
   router.get("/", (req, res) => {
     const name = req.query.name;
-    if (!name) return res.status(400).send("Name fehlt");
+    if (!name) {
+      return res.status(400).json({ error: "Name fehlt in der Query (z.B. ?name=Peter)" });
+    }
 
-    db.query(
-      "INSERT INTO greetings (name, source) VALUES (?, ?)",
-      [name, "query"],
-      (err) => {
-        if (err) return res.status(500).send("Fehler beim Einfügen in die DB");
-        res.send("Hallo, mein Name ist " + name);
-      }
-    );
+    res.json({ message: `Hallo, mein Name ist ${name}` });
   });
 
-  // GET /hello/:name
+  // GET /hello/:name Parameter
   router.get("/:name", (req, res) => {
     const name = req.params.name;
-
-    db.query(
-      "INSERT INTO greetings (name, source) VALUES (?, ?)",
-      [name, "param"],
-      (err) => {
-        if (err) return res.status(500).send("Fehler beim Einfügen in die DB");
-        res.send("Hallo, mein Name ist auch " + name);
-      }
-    );
+    res.json({ message: `Hallo, mein Name ist auch ${name}` });
   });
 
   return router;

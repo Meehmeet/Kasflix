@@ -1,10 +1,12 @@
 const express = require("express");
 const mysql = require("mysql2");
 const dotenv = require("dotenv");
+const authenticateToken = require("./middleware/auth");
 
 dotenv.config();
 const app = express();
 const port = 3000;
+
 
 // DB-Verbindung
 const db = mysql.createConnection({
@@ -27,7 +29,8 @@ app.use(express.json());
 
 // Routen einbinden
 app.use("/hello", require("./routes/helloroute")(db));
-app.use("/person", require("./routes/userroute")(db));
+app.use("/person", authenticateToken, require("./routes/userroute")(db));
+app.use("/user", require("./routes/loginroute")(db));
 
 // Server starten
 app.listen(port, () => {
