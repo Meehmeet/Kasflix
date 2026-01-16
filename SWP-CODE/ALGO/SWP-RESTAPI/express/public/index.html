@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Verwaltung - REST API</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚗 Auto Verwaltungssystem</h1>
+            <p>Verwalten Sie Ihre Autos mit dieser modernen Weboberfläche</p>
+        </header>
+
+        <!-- Formular zum Hinzufügen/Bearbeiten -->
+        <section class="form-section">
+            <h2 id="form-title">Neues Auto hinzufügen</h2>
+            <form id="auto-form">
+                <input type="hidden" id="auto-id">
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="marke">Marke</label>
+                        <input type="text" id="marke" placeholder="z.B. BMW" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modell">Modell</label>
+                        <input type="text" id="modell" placeholder="z.B. M3" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ps">PS (Pferdestärken)</label>
+                        <input type="number" id="ps" placeholder="z.B. 480" required min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="plaetze">Anzahl Plätze</label>
+                        <input type="number" id="plaetze" placeholder="z.B. 5" required min="1" max="9">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="baujahr">Baujahr</label>
+                        <input type="number" id="baujahr" placeholder="z.B. 2023" required min="1900" max="2030">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="farbe">Farbe</label>
+                        <select id="farbe" required>
+                            <option value="">Farbe wählen...</option>
+                            <option value="Schwarz">Schwarz</option>
+                            <option value="Weiß">Weiß</option>
+                            <option value="Silber">Silber</option>
+                            <option value="Grau">Grau</option>
+                            <option value="Rot">Rot</option>
+                            <option value="Blau">Blau</option>
+                            <option value="Grün">Grün</option>
+                            <option value="Gelb">Gelb</option>
+                            <option value="Orange">Orange</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submit-btn">
+                        <span class="btn-icon">➕</span> Auto hinzufügen
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn" style="display: none;">
+                        <span class="btn-icon">✖</span> Abbrechen
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Statistiken -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon">🚗</div>
+                <div class="stat-content">
+                    <h3 id="total-cars">0</h3>
+                    <p>Autos gesamt</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-content">
+                    <h3 id="avg-ps">0</h3>
+                    <p>Durchschnitt PS</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-content">
+                    <h3 id="newest-year">-</h3>
+                    <p>Neuestes Baujahr</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter und Suche -->
+        <section class="filter-section">
+            <div class="search-box">
+                <input type="text" id="search" placeholder="🔍 Suche nach Marke, Modell oder Farbe...">
+            </div>
+        </section>
+
+        <!-- Auto-Liste -->
+        <section class="cars-section">
+            <div class="section-header">
+                <h2>Alle Autos</h2>
+                <button class="btn btn-refresh" id="refresh-btn">
+                    <span class="btn-icon">🔄</span> Aktualisieren
+                </button>
+            </div>
+            
+            <div id="loading" class="loading">Lade Daten...</div>
+            <div id="cars-container" class="cars-grid"></div>
+            <div id="no-results" class="no-results" style="display: none;">
+                <p>Keine Autos gefunden.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
