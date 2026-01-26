@@ -1,7 +1,10 @@
 import { Actor } from "./Actor.js";
 import { Move } from "../interfaces/Move.js";
+import { DeathNotifier } from "../patterns/Observer.js";
+import { GameStats } from "../patterns/GameStats.js";
 
 export class Triangle implements Actor {
+  id: number;
   x: number;
   y: number;
   speed: number;
@@ -12,7 +15,8 @@ export class Triangle implements Actor {
   private movement3: Move;
   private currentMovement: Move;
 
-  constructor(startX: number, movement1: Move, movement2: Move, movement3: Move) {
+  constructor(startX: number, movement1: Move, movement2: Move, movement3: Move, id: number = 0) {
+    this.id = id;
     this.startX = startX;
     this.x = startX;
     this.y = Math.random() * -300;
@@ -21,6 +25,10 @@ export class Triangle implements Actor {
     this.movement2 = movement2;
     this.movement3 = movement3;
     this.currentMovement = movement1;
+  }
+
+  getType(): string {
+    return "Dreieck";
   }
 
   move(dt: number): void {
@@ -36,6 +44,11 @@ export class Triangle implements Actor {
     this.x = pos.x;
     
     if (this.y > 650) {
+      // Tod registrieren via Observer und Singleton
+      GameStats.getInstance().registerDeath("Triangle");
+      DeathNotifier.getInstance().notifyDeath(this.getType(), this.id);
+      
+      // Respawn
       this.y = Math.random() * -300;
       this.x = this.startX;
       this.time = 0;
@@ -51,5 +64,12 @@ export class Triangle implements Actor {
     ctx.closePath();
     ctx.fillStyle = "blue";
     ctx.fill();
+    
+    // ID anzeigen
+    ctx.fillStyle = "white";
+    ctx.font = "10px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(`${this.id}`, this.x, this.y + 8);
+    ctx.textAlign = "left";
   }
 }

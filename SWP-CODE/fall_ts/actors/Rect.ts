@@ -1,7 +1,10 @@
 import { Actor } from "./Actor.js";
 import { Move } from "../interfaces/Move.js";
+import { DeathNotifier } from "../patterns/Observer.js";
+import { GameStats } from "../patterns/GameStats.js";
 
 export class Rect implements Actor {
+  id: number;
   x: number;
   y: number;
   speed: number;
@@ -12,7 +15,8 @@ export class Rect implements Actor {
   private movement3: Move;
   private currentMovement: Move;
 
-  constructor(startX: number, movement1: Move, movement2: Move, movement3: Move) {
+  constructor(startX: number, movement1: Move, movement2: Move, movement3: Move, id: number = 0) {
+    this.id = id;
     this.startX = startX;
     this.x = startX;
     this.y = Math.random() * -300;
@@ -21,6 +25,10 @@ export class Rect implements Actor {
     this.movement2 = movement2;
     this.movement3 = movement3;
     this.currentMovement = movement1;
+  }
+
+  getType(): string {
+    return "Rechteck";
   }
 
   move(dt: number): void {
@@ -36,6 +44,11 @@ export class Rect implements Actor {
     this.x = pos.x;
     
     if (this.y > 650) {
+      // Tod registrieren via Observer und Singleton
+      GameStats.getInstance().registerDeath("Rect");
+      DeathNotifier.getInstance().notifyDeath(this.getType(), this.id);
+      
+      // Respawn
       this.y = Math.random() * -300;
       this.x = this.startX;
       this.time = 0;
@@ -46,5 +59,12 @@ export class Rect implements Actor {
   render(ctx: CanvasRenderingContext2D): void {
     ctx.fillStyle = "red";
     ctx.fillRect(this.x - 20, this.y - 20, 40, 40);
+    
+    // ID anzeigen
+    ctx.fillStyle = "white";
+    ctx.font = "10px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(`${this.id}`, this.x, this.y + 4);
+    ctx.textAlign = "left";
   }
 }

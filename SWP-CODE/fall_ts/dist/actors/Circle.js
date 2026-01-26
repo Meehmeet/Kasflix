@@ -1,6 +1,9 @@
+import { DeathNotifier } from "../patterns/Observer.js";
+import { GameStats } from "../patterns/GameStats.js";
 export class Circle {
-    constructor(startX, movement1, movement2, movement3) {
+    constructor(startX, movement1, movement2, movement3, id = 0) {
         this.time = 0;
+        this.id = id;
         this.startX = startX;
         this.x = startX;
         this.y = Math.random() * -300;
@@ -9,6 +12,9 @@ export class Circle {
         this.movement2 = movement2;
         this.movement3 = movement3;
         this.currentMovement = movement1;
+    }
+    getType() {
+        return "Kreis";
     }
     move(dt) {
         this.time += dt;
@@ -20,6 +26,10 @@ export class Circle {
         const pos = this.currentMovement.move(this.x, this.y, this.time, dt);
         this.x = pos.x;
         if (this.y > 650) {
+            // Tod registrieren via Observer und Singleton
+            GameStats.getInstance().registerDeath("Circle");
+            DeathNotifier.getInstance().notifyDeath(this.getType(), this.id);
+            // Respawn
             this.y = Math.random() * -300;
             this.x = this.startX;
             this.time = 0;
@@ -31,5 +41,11 @@ export class Circle {
         ctx.arc(this.x, this.y, 20, 0, Math.PI * 2);
         ctx.fillStyle = "green";
         ctx.fill();
+        // ID anzeigen
+        ctx.fillStyle = "white";
+        ctx.font = "10px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.id}`, this.x, this.y + 4);
+        ctx.textAlign = "left";
     }
 }

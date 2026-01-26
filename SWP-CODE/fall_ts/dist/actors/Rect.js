@@ -1,6 +1,9 @@
+import { DeathNotifier } from "../patterns/Observer.js";
+import { GameStats } from "../patterns/GameStats.js";
 export class Rect {
-    constructor(startX, movement1, movement2, movement3) {
+    constructor(startX, movement1, movement2, movement3, id = 0) {
         this.time = 0;
+        this.id = id;
         this.startX = startX;
         this.x = startX;
         this.y = Math.random() * -300;
@@ -9,6 +12,9 @@ export class Rect {
         this.movement2 = movement2;
         this.movement3 = movement3;
         this.currentMovement = movement1;
+    }
+    getType() {
+        return "Rechteck";
     }
     move(dt) {
         this.time += dt;
@@ -20,6 +26,10 @@ export class Rect {
         const pos = this.currentMovement.move(this.x, this.y, this.time, dt);
         this.x = pos.x;
         if (this.y > 650) {
+            // Tod registrieren via Observer und Singleton
+            GameStats.getInstance().registerDeath("Rect");
+            DeathNotifier.getInstance().notifyDeath(this.getType(), this.id);
+            // Respawn
             this.y = Math.random() * -300;
             this.x = this.startX;
             this.time = 0;
@@ -29,5 +39,11 @@ export class Rect {
     render(ctx) {
         ctx.fillStyle = "red";
         ctx.fillRect(this.x - 20, this.y - 20, 40, 40);
+        // ID anzeigen
+        ctx.fillStyle = "white";
+        ctx.font = "10px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.id}`, this.x, this.y + 4);
+        ctx.textAlign = "left";
     }
 }
